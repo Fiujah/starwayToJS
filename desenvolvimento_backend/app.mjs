@@ -1,20 +1,30 @@
 import http from 'node:http';
 import { stock } from './stock.mjs';
-import { json } from 'node:stream/consumers';
+import { URL } from 'node:url';
 
 const server = http.createServer();
 
 server.addListener('request', (request, response) => {
-    if (request.url === '/') {
+    const urlObject = new URL(`http://${request.headers.host}${request.url}`);
+    console.log(urlObject);
+    if (urlObject.pathname === '/') {
         response.writeHead(200, { 'Content-Type': 'application/json' });
         response.write(JSON.stringify(stock));
         response.end();
-    } else if (request.url === '/get-unavailable-products') {
+    } 
+    else if (urlObject.pathname === '/get-unavailable-products') {
         const unavailableProducts = stock.filter(
             (product) => product.amountLeft === 0
         );
         response.writeHead(200, {'content-type': 'application/json'});
         response.write(JSON.stringify(unavailableProducts));
+        response.end();
+    }
+    if (urlObject.pathname === '/get-by-id'){
+        console.log('Olha só como funciona')
+        const selectedObject = stock.find(product => product.id === Number(urlObject.searchParams.get('id')));
+        response.writeHead(200, {'content-type': 'application/json'});
+        response.write(JSON.stringify(selectedObject));
         response.end();
     }
 });
