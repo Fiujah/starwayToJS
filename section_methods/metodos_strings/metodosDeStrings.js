@@ -1,5 +1,4 @@
 // String - Sequência de caracteres
-let string = "Olá Mundo!";
 // [O][l][á][ ][M][u][n][d][o][!]
 // [0][1][2][3][4][5][6][7][8][9]
 // [1][2][3][4][5][6][7][8][9][10]
@@ -10,6 +9,7 @@ let string = "Olá Mundo!";
 // slice(start. end) Obs: start é obrigatória, segunda é opcional
 
 // console.log(string)
+let string = "Olá Mundo!";
 i = 0
 let novaString = ''
 let stringSeparada = ''
